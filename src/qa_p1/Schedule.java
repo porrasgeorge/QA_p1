@@ -17,9 +17,9 @@ public class Schedule {
     String Description;
     LocalTime Departure_Time;
     LocalTime Arrival_Time;
-    boolean Status;
+    int Status;
 
-    public Schedule (int ID, int Bus_Number, String Description, LocalTime Departure_Time, LocalTime Arrival_Time, boolean Status) {
+    public Schedule (int ID, int Bus_Number, String Description, LocalTime Departure_Time, LocalTime Arrival_Time, int Status) {
         this.ID = ID;
         this.Bus_Number = Bus_Number;
         this.Description = Description;

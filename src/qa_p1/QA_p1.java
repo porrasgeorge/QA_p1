@@ -10,31 +10,28 @@ package qa_p1;
  * @author Administrador
  */
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import java.time.LocalTime;
 
 public class QA_p1 {
 
-    public static void createNewDatabase(String fileName) {
-        String url = "jdbc:sqlite:C:/Java/QA_p1/" + fileName;
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("The driver name is " + meta.getDriverName());
-                System.out.println("A new database has been created.");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public static void main(String[] args) {
-        createNewDatabase("test.db");
+        DB.createNewDatabase();
+        DB.createSchedulesTable();
         
-        Schedule Sched = new Schedule(1, 1, "Ruta San Francisco", LocalTime.of(6, 20), LocalTime.of(7, 0), true);
+        Schedule Sched1 = new Schedule(1, 10, "Ruta San Francisco - CQ", LocalTime.of(6, 20), LocalTime.of(7, 0), 1);
+        Schedule Sched2 = new Schedule(2, 1, "Ruta Korea - Pital", LocalTime.of(8, 0), LocalTime.of(9, 0), 1);
+        Schedule Sched3 = new Schedule(3, 2, "Ruta Florencia - CQ", LocalTime.of(7, 0), LocalTime.of(7, 20), 1);
+        Schedule Sched4 = new Schedule(4, 3, "Ruta Venecia - CQ", LocalTime.of(5, 20), LocalTime.of(5, 50), 1);
+        Schedule Sched5 = new Schedule(5, 7, "Ruta Pital - CQ", LocalTime.of(16, 20), LocalTime.of(17, 0), 1);
+        
+        
+        DB.insertNewSchedule(Sched1);
+        DB.insertNewSchedule(Sched2);
+        DB.insertNewSchedule(Sched3);
+        DB.insertNewSchedule(Sched4);
+        DB.insertNewSchedule(Sched5);
+        
     }
     
 }
