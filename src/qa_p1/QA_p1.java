@@ -32,7 +32,7 @@ public class QA_p1 {
         DB.insertNewSchedule(Sched4);
         DB.insertNewSchedule(Sched5);
         
-        DB.selectScheduleWhereId(2);
+        DB.selectScheduleWhereId(2).print();
         
     }
     

@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalTime;
 
 /**
  *
@@ -82,24 +83,27 @@ public class DB {
         }
     }
     
-    public static void selectScheduleWhereId(int ID){
+    public static Schedule selectScheduleWhereId(int ID){
         String sql = "SELECT ID, BusNumber, Description, Departure_Time, Arrival_Time, Status FROM Schedules where ID = " + ID + ";";
+        Schedule Sched = new Schedule();
         
         try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
             
+            Sched.ID = rs.getInt("ID");
+            Sched.Bus_Number = rs.getInt("BusNumber");
+            Sched.Description = rs.getString("Description");
+            Sched.Departure_Time = LocalTime.parse(rs.getString("Departure_Time"));
+            Sched.Arrival_Time = LocalTime.parse(rs.getString("Arrival_Time"));
+            Sched.Status = rs.getInt("Status");
+
             // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getInt("ID") +  "\t" + 
-                                   rs.getInt("BusNumber") +  "\t" + 
-                                   rs.getString("Description") + "\t" +
-                                   rs.getString("Departure_Time") + "\t" +
-                                   rs.getString("Arrival_Time") + "\t" +
-                                   rs.getInt("Status"));
-            }
+            
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        
+        return Sched;
     }
 }

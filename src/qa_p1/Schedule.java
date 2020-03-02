@@ -19,6 +19,15 @@ public class Schedule {
     LocalTime Arrival_Time;
     int Status;
 
+    public Schedule () {
+        this.ID = 1;
+        this.Bus_Number = 1;
+        this.Description = "Schedule 1";
+        this.Departure_Time = LocalTime.of(01, 00);
+        this.Arrival_Time = LocalTime.of(01, 10);
+        this.Status = 0;
+    }
+    
     public Schedule (int ID, int Bus_Number, String Description, LocalTime Departure_Time, LocalTime Arrival_Time, int Status) {
         this.ID = ID;
         this.Bus_Number = Bus_Number;
@@ -26,6 +35,17 @@ public class Schedule {
         this.Departure_Time = Departure_Time;
         this.Arrival_Time = Arrival_Time;
         this.Status = Status;
+    }
+    
+    public void print(){
+        
+	System.out.println(this.ID +  "\t" + 
+            this.Bus_Number +  "\t" + 
+            this.Description + "\t" +
+            this.Departure_Time.toString() + "\t" +
+            this.Arrival_Time.toString() + "\t" +
+            this.Status
+        );
     }
 }
 
