@@ -46,11 +46,11 @@ public class DBTest {
         DB.insertNewSchedule(Sched4);
         DB.insertNewSchedule(Sched5);
     }
-    
-    @After
-    public void tearDown() {
-        DB.deleteSchedulesTable();
-    }
+//    
+//    @After
+//    public void tearDown() {
+//        DB.deleteSchedulesTable();
+//    }
 
     /**
      * Test of createNewDatabase method, of class DB.
@@ -118,18 +118,44 @@ public class DBTest {
         assertFalse(SchedToDB.isEquals(SchedFromDB));
     }    
     // deberia ser AssertFalse pues los Schedules son diferentes pues tienen IDs diferentes aunque todo los demas datos son iguales
-    
+
     /**
      * Test of selectScheduleWhereId method, of class DB.
      */
-//    @Test
-//    public void testSelectScheduleWhereId() {
-//        System.out.println("selectScheduleWhereId");
-//        int ID = 6;
-//        Schedule expResult = new Schedule(6, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
-//        Schedule result = DB.selectScheduleWhereId(ID);
-//        assertEquals(expResult, result);
-//
-//    }
+    @Test
+    public void testSelectScheduleWhereId() {
+        System.out.println("selectScheduleWhereId");
+        int ID = 16;
+        Schedule SchedToDB = new Schedule(16, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
+        DB.insertNewSchedule(SchedToDB);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        assertTrue(SchedToDB.isEquals(SchedFromDB));
+    }
     
+    @Test
+    public void testSelectScheduleWhereId2() {
+        System.out.println("selectScheduleWhereId");
+        Schedule SchedFromDB = DB.selectScheduleWhereId(10);
+        assertNull(SchedFromDB);
+    }
+    // el ID no existe por la tanto debe traer NULL
+
+    @Test
+    public void testUpdateScheduleByID() {
+        System.out.println("updateSchedule");
+        Schedule Sched = new Schedule(26, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
+        DB.insertNewSchedule(Sched);
+        DB.updateScheduleByID(26, 5, "Ruta Naranjo - Palmares", LocalTime.of(2, 20), LocalTime.of(13, 0), 0);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(26);
+        assertTrue(SchedFromDB.isEquals(26, 5, "Ruta Naranjo - Palmares", LocalTime.of(2, 20), LocalTime.of(13, 0), 0));
+    }
+    
+    @Test
+    public void testUpdateScheduleByID2() {
+        System.out.println("updateSchedule");
+        int ID = 2;
+        DB.updateScheduleByID(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        assertTrue(SchedFromDB.isEquals(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1));
+    }
 }

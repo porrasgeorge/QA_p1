@@ -101,10 +101,40 @@ public class DB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return Sched;
+        if (Sched.ID == -1)
+            return null;
+        else
+            return Sched;
     }
 
+    
+    public static void updateScheduleByID(int ID, int BusNumber, String Description, LocalTime Departure_Time, LocalTime Arrival_Time, int Status) {
+        String sql = "UPDATE Schedules SET BusNumber = ?, Description = ?, Departure_Time = ?, Arrival_Time = ?, Status = ? WHERE ID = " + ID + ";";
 
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, BusNumber);
+            pstmt.setString(2, Description);
+            pstmt.setString(3, Departure_Time.toString());
+            pstmt.setString(4, Arrival_Time.toString());
+            pstmt.setInt(5, Status);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public static int lengthSchedulesTable() {
         String sql = "SELECT COUNT(*) AS Quantity FROM Schedules ;";
         int Quantity = 0;

@@ -20,11 +20,11 @@ public class Schedule {
     int Status;
 
     public Schedule () {
-        this.ID = 1;
-        this.Bus_Number = 1;
-        this.Description = "Schedule 1";
-        this.Departure_Time = LocalTime.of(01, 00);
-        this.Arrival_Time = LocalTime.of(01, 10);
+        this.ID = -1;
+        this.Bus_Number = 0;
+        this.Description = "";
+        this.Departure_Time = LocalTime.of(00, 00);
+        this.Arrival_Time = LocalTime.of(00, 10);
         this.Status = 0;
     }
     
@@ -44,6 +44,15 @@ public class Schedule {
                 this.Departure_Time.equals(Sched.Departure_Time) &&
                 this.Arrival_Time.equals(Sched.Arrival_Time) &&
                 this.Status == Sched.Status;
+    }
+    
+    public boolean isEquals (int ID, int Bus_Number, String Description, LocalTime Departure_Time, LocalTime Arrival_Time, int Status) {
+        return this.ID ==  ID && 
+            this.Bus_Number == Bus_Number &&
+            this.Description.equals(Description) &&
+            this.Departure_Time.equals(Departure_Time) &&
+            this.Arrival_Time.equals(Arrival_Time) &&
+            this.Status == Status;
     }
     
     
