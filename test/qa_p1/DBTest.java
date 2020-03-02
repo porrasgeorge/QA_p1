@@ -114,7 +114,7 @@ public class DBTest {
         System.out.println("insertNewSchedule");
         Schedule SchedToDB = new Schedule(8, 10, "Ruta Pital - Florencia", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
         DB.insertNewSchedule(SchedToDB);
-        Schedule SchedFromDB = DB.selectScheduleWhereId(7);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(4);
         assertFalse(SchedToDB.isEquals(SchedFromDB));
     }    
     // deberia ser AssertFalse pues los Schedules son diferentes pues tienen IDs diferentes aunque todo los demas datos son iguales
