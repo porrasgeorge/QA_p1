@@ -97,13 +97,27 @@ public class DB {
             Sched.Departure_Time = LocalTime.parse(rs.getString("Departure_Time"));
             Sched.Arrival_Time = LocalTime.parse(rs.getString("Arrival_Time"));
             Sched.Status = rs.getInt("Status");
-
-            // loop through the result set
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        
         return Sched;
     }
+
+
+    public static int lengthSchedulesTable() {
+        String sql = "SELECT COUNT(*) AS Quantity FROM Schedules ;";
+        int Quantity = 0;
+        
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+           Quantity = rs.getInt("Quantity");
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Quantity;
+    }   
 }

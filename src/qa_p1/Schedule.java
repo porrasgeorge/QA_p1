@@ -37,8 +37,17 @@ public class Schedule {
         this.Status = Status;
     }
     
+    public boolean isEquals (Schedule Sched) {
+        return this.ID ==  Sched.ID && 
+                this.Bus_Number == Sched.Bus_Number &&
+                this.Description.equals(Sched.Description) &&
+                this.Departure_Time.equals(Sched.Departure_Time) &&
+                this.Arrival_Time.equals(Sched.Arrival_Time) &&
+                this.Status == Sched.Status;
+    }
+    
+    
     public void print(){
-        
 	System.out.println(this.ID +  "\t" + 
             this.Bus_Number +  "\t" + 
             this.Description + "\t" +
