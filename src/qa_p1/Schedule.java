@@ -38,21 +38,31 @@ public class Schedule {
     }
     
     public boolean isEquals (Schedule Sched) {
-        return this.ID ==  Sched.ID && 
+        if (this != null && Sched != null)
+        {
+            return this.ID ==  Sched.ID && 
                 this.Bus_Number == Sched.Bus_Number &&
                 this.Description.equals(Sched.Description) &&
                 this.Departure_Time.equals(Sched.Departure_Time) &&
                 this.Arrival_Time.equals(Sched.Arrival_Time) &&
                 this.Status == Sched.Status;
+        }
+        else
+            return false;
+        
     }
     
     public boolean isEquals (int ID, int Bus_Number, String Description, LocalTime Departure_Time, LocalTime Arrival_Time, int Status) {
-        return this.ID ==  ID && 
+        if (this != null)
+        {return this.ID ==  ID && 
             this.Bus_Number == Bus_Number &&
             this.Description.equals(Description) &&
             this.Departure_Time.equals(Departure_Time) &&
             this.Arrival_Time.equals(Arrival_Time) &&
             this.Status == Status;
+        }
+        else
+            return false;
     }
     
     

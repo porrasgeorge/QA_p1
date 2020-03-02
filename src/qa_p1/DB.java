@@ -122,8 +122,31 @@ public class DB {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void deactivateScheduleByID(int ID) {
+        String sql = "UPDATE Schedules SET Status = ? WHERE ID = " + ID + ";";
+
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, 0);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }    
-    
+
+    public static void activateScheduleByID(int ID) {
+        String sql = "UPDATE Schedules SET Status = ? WHERE ID = " + ID + ";";
+
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, 1);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }    
     
     
     

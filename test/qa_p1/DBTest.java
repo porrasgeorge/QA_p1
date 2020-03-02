@@ -36,8 +36,8 @@ public class DBTest {
         
         Schedule Sched1 = new Schedule(1, 10, "Ruta San Francisco - CQ", LocalTime.of(6, 20), LocalTime.of(7, 0), 0);
         Schedule Sched2 = new Schedule(2, 1, "Ruta Korea - Pital", LocalTime.of(8, 0), LocalTime.of(9, 0), 0);
-        Schedule Sched3 = new Schedule(3, 2, "Ruta Florencia - CQ", LocalTime.of(7, 0), LocalTime.of(7, 20), 0);
-        Schedule Sched4 = new Schedule(4, 3, "Ruta Venecia - CQ", LocalTime.of(5, 20), LocalTime.of(5, 50), 0);
+        Schedule Sched3 = new Schedule(3, 2, "Ruta Florencia - CQ", LocalTime.of(7, 0), LocalTime.of(7, 20), 1);
+        Schedule Sched4 = new Schedule(4, 3, "Ruta Venecia - CQ", LocalTime.of(5, 20), LocalTime.of(5, 50), 1);
         Schedule Sched5 = new Schedule(5, 7, "Ruta Pital - CQ", LocalTime.of(16, 20), LocalTime.of(17, 0), 1);
         
         DB.insertNewSchedule(Sched1);
@@ -90,7 +90,7 @@ public class DBTest {
      */
     @Test
     public void testInsertNewSchedule() {
-        System.out.println("insertNewSchedule");
+        System.out.println("insert Schedule test 1");
         int SizeBefore = DB.lengthSchedulesTable();
         Schedule Sched = new Schedule(6, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
         DB.insertNewSchedule(Sched);
@@ -101,7 +101,7 @@ public class DBTest {
 
     @Test
     public void testInsertNewSchedule2() {
-        System.out.println("insertNewSchedule");
+        System.out.println("insert Schedule test 2");
         Schedule SchedToDB = new Schedule(7, 10, "Ruta Pital - Florencia", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
         DB.insertNewSchedule(SchedToDB);
         Schedule SchedFromDB = DB.selectScheduleWhereId(7);
@@ -111,7 +111,7 @@ public class DBTest {
 
     @Test
     public void testInsertNewSchedule3() {
-        System.out.println("insertNewSchedule");
+        System.out.println("insert Schedule test 3");
         Schedule SchedToDB = new Schedule(8, 10, "Ruta Pital - Florencia", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
         DB.insertNewSchedule(SchedToDB);
         Schedule SchedFromDB = DB.selectScheduleWhereId(4);
@@ -124,7 +124,7 @@ public class DBTest {
      */
     @Test
     public void testSelectScheduleWhereId() {
-        System.out.println("selectScheduleWhereId");
+        System.out.println("select Schedule by Id");
         int ID = 16;
         Schedule SchedToDB = new Schedule(16, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
         DB.insertNewSchedule(SchedToDB);
@@ -134,7 +134,7 @@ public class DBTest {
     
     @Test
     public void testSelectScheduleWhereId2() {
-        System.out.println("selectScheduleWhereId");
+        System.out.println("select Schedule by Id test 2");
         Schedule SchedFromDB = DB.selectScheduleWhereId(10);
         assertNull(SchedFromDB);
     }
@@ -142,7 +142,7 @@ public class DBTest {
 
     @Test
     public void testUpdateScheduleByID() {
-        System.out.println("updateSchedule");
+        System.out.println("update Schedule");
         Schedule Sched = new Schedule(26, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
         DB.insertNewSchedule(Sched);
         DB.updateScheduleByID(26, 5, "Ruta Naranjo - Palmares", LocalTime.of(2, 20), LocalTime.of(13, 0), 0);
@@ -152,10 +152,40 @@ public class DBTest {
     
     @Test
     public void testUpdateScheduleByID2() {
-        System.out.println("updateSchedule");
+        System.out.println("update Schedule test 2");
         int ID = 2;
         DB.updateScheduleByID(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1);
         Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
         assertTrue(SchedFromDB.isEquals(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1));
     }
+    
+    @Test
+    public void testDeactivateScheduleByID() {
+        System.out.println("deactivate Schedule");
+        int ID = 3;
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        DB.deactivateScheduleByID(ID);
+        Schedule SchedFromDBAfter = DB.selectScheduleWhereId(ID);
+        if (SchedFromDB != null && SchedFromDBAfter != null)
+            assertTrue(SchedFromDB.Status == 1 && SchedFromDBAfter.Status == 0);
+        else
+            fail("Some value is null");
+    }
+    // revisa que primero estuviera activado y que luego esté desactivado
+    
+    
+    @Test
+    public void testActivateScheduleByID() {
+        System.out.println("activate Schedule");
+        int ID = 1;
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        DB.activateScheduleByID(ID);
+        Schedule SchedFromDBAfter = DB.selectScheduleWhereId(ID);
+        if (SchedFromDB != null && SchedFromDBAfter != null)
+            assertTrue(SchedFromDB.Status == 0 && SchedFromDBAfter.Status == 1);
+        else
+            fail("Some value is null");
+    }
+    // revisa que primero estuviera desactivado y que luego esté activado
+    
 }
