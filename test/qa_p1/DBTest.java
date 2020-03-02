@@ -135,7 +135,8 @@ public class DBTest {
     @Test
     public void testSelectScheduleWhereId2() {
         System.out.println("select Schedule by Id test 2");
-        Schedule SchedFromDB = DB.selectScheduleWhereId(10);
+        int ID = 10;
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
         assertNull(SchedFromDB);
     }
     // el ID no existe por la tanto debe traer NULL
@@ -143,11 +144,12 @@ public class DBTest {
     @Test
     public void testUpdateScheduleByID() {
         System.out.println("update Schedule");
-        Schedule Sched = new Schedule(26, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
+        int ID = 1;
+        Schedule Sched = new Schedule(ID, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
         DB.insertNewSchedule(Sched);
-        DB.updateScheduleByID(26, 5, "Ruta Naranjo - Palmares", LocalTime.of(2, 20), LocalTime.of(13, 0), 0);
-        Schedule SchedFromDB = DB.selectScheduleWhereId(26);
-        assertTrue(SchedFromDB.isEquals(26, 5, "Ruta Naranjo - Palmares", LocalTime.of(2, 20), LocalTime.of(13, 0), 0));
+        DB.updateScheduleByID(ID, 5, "Ruta Naranjo - Palmares", LocalTime.of(2, 20), LocalTime.of(13, 0), 0);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        assertTrue(SchedFromDB.isEquals(ID, 5, "Ruta Naranjo - Palmares", LocalTime.of(2, 20), LocalTime.of(13, 0), 0));
     }
     
     @Test
@@ -158,10 +160,23 @@ public class DBTest {
         Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
         assertTrue(SchedFromDB.isEquals(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1));
     }
-    
+     
     @Test
     public void testDeactivateScheduleByID() {
         System.out.println("deactivate Schedule");
+        int ID = 2;
+        DB.deactivateScheduleByID(ID);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        if (SchedFromDB != null )
+            assertTrue(SchedFromDB.Status == 0);
+        else
+            fail("Some value is null");
+    }
+    // revisa que esté desactivado  
+    
+    @Test
+    public void testDeactivateScheduleByID2() {
+        System.out.println("deactivate Schedule test 2");
         int ID = 3;
         Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
         DB.deactivateScheduleByID(ID);
@@ -177,6 +192,21 @@ public class DBTest {
     @Test
     public void testActivateScheduleByID() {
         System.out.println("activate Schedule");
+        int ID = 2;
+        DB.activateScheduleByID(ID);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        if (SchedFromDB != null )
+            assertTrue(SchedFromDB.Status == 1);
+        else
+            fail("Some value is null");
+    }
+    // revisa que esté activado
+    
+    
+    
+    @Test
+    public void testActivateScheduleByID2() {
+        System.out.println("activate Schedule test 2");
         int ID = 1;
         Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
         DB.activateScheduleByID(ID);
