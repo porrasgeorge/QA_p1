@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -32,8 +33,19 @@ public class DB {
         }
     }
     
+    public static void deleteSchedulesTable() {
+        String sql = "DROP TABLE IF EXISTS Schedules;";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+            // drop table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void createSchedulesTable() {
-        // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS Schedules (\n"
                 + "    ID integer PRIMARY KEY,\n"
                 + "    BusNumber integer,\n"
@@ -57,7 +69,7 @@ public class DB {
                 + " VALUES(?,?,?,?,?,?)";
  
         try (Connection conn = DriverManager.getConnection(url);
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, Sched.ID);
             pstmt.setInt(2, Sched.Bus_Number);
             pstmt.setString(3, Sched.Description);
@@ -65,6 +77,27 @@ public class DB {
             pstmt.setString(5, Sched.Arrival_Time.toString());
             pstmt.setInt(6, Sched.Status);
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void selectScheduleWhereId(int ID){
+        String sql = "SELECT ID, BusNumber, Description, Departure_Time, Arrival_Time, Status FROM Schedules where ID = " + ID + ";";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+                System.out.println(rs.getInt("ID") +  "\t" + 
+                                   rs.getInt("BusNumber") +  "\t" + 
+                                   rs.getString("Description") + "\t" +
+                                   rs.getString("Departure_Time") + "\t" +
+                                   rs.getString("Arrival_Time") + "\t" +
+                                   rs.getInt("Status"));
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
