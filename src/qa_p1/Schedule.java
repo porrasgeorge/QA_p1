@@ -6,7 +6,8 @@
 package qa_p1;
 
 import java.time.LocalTime;
-
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Administrador
@@ -91,7 +92,7 @@ public class Schedule {
         DB.insertNewSchedule(this);
     }
     
-    public static Schedule readScheduleByID(int ID){
+    public static Schedule getScheduleByID(int ID){
      Schedule Sched = DB.selectScheduleWhereId(ID);
      return Sched;
     }
@@ -110,8 +111,9 @@ public class Schedule {
         DB.activateScheduleByID(this.ID);
     }
     
-    
-    
-    
+    public static List<Schedule> getSchedulesByBusNumber(int busNumber){
+        List<Schedule> SchedulesList = DB.schedulesByBusNumber(busNumber);
+        return SchedulesList;
+    }
 }
 
