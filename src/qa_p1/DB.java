@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,7 +22,11 @@ import java.time.LocalTime;
  */
 public class DB {
     
-    public static String url = "jdbc:sqlite:C:/Java/QA_p1/p1.db";
+    //WINDOWS 
+    //public static String url = "jdbc:sqlite:C:/Java/QA_p1/p1.db";
+    
+    //LINUX
+    public static String url = "jdbc:sqlite:/home/matute/QA_p1/p1.db";
 
     public static void createNewDatabase() {
         try (Connection conn = DriverManager.getConnection(url)) {
@@ -29,7 +35,8 @@ public class DB {
                 System.out.println("The driver name is " + meta.getDriverName());
                 System.out.println("A new database has been created.");
             }
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -41,7 +48,8 @@ public class DB {
                 Statement stmt = conn.createStatement()) {
             // drop table
             stmt.execute(sql);
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -60,10 +68,15 @@ public class DB {
                 Statement stmt = conn.createStatement()) {
             // create a new table
             stmt.execute(sql);
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
+///////////////////
+//    Schedules
+
     
     public static void insertNewSchedule(Schedule Sched) {
         String sql = "INSERT INTO Schedules(ID, BusNumber, Description, Departure_Time, Arrival_Time, Status)"
@@ -78,7 +91,8 @@ public class DB {
             pstmt.setString(5, Sched.Arrival_Time.toString());
             pstmt.setInt(6, Sched.Status);
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -98,7 +112,8 @@ public class DB {
             Sched.Arrival_Time = LocalTime.parse(rs.getString("Arrival_Time"));
             Sched.Status = rs.getInt("Status");
             
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         if (Sched.ID == -1)
@@ -119,7 +134,8 @@ public class DB {
             pstmt.setString(4, Arrival_Time.toString());
             pstmt.setInt(5, Status);
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -143,19 +159,38 @@ public class DB {
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, 1);
             pstmt.executeUpdate();
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }    
     
-    
-    
-    
-    
-    
-    
-    
-    
+    public static List<Schedule> schedulesByBusNumber(int BusNumber) {
+        List<Schedule> SchedulesList = new ArrayList<>();
+        String sql = "SELECT ID, BusNumber, Description, Departure_Time, Arrival_Time, Status FROM Schedules where BusNumber = " + BusNumber + ";";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+            while (rs.next()) {  
+                Schedule Sched = new Schedule();
+                Sched.ID = rs.getInt("ID");
+                Sched.Bus_Number = rs.getInt("BusNumber");
+                Sched.Description = rs.getString("Description");
+                Sched.Departure_Time = LocalTime.parse(rs.getString("Departure_Time"));
+                Sched.Arrival_Time = LocalTime.parse(rs.getString("Arrival_Time"));
+                Sched.Status = rs.getInt("Status");
+                SchedulesList.add(Sched);
+            } 
+            
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return SchedulesList;
+    }  
     
     
     public static int lengthSchedulesTable() {
@@ -168,7 +203,8 @@ public class DB {
             
            Quantity = rs.getInt("Quantity");
             
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return Quantity;

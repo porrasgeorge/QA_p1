@@ -20,13 +20,13 @@ import static org.junit.Assert.*;
  */
 public class DBTest {
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+//    @BeforeClass
+//    public static void setUpClass() {
+//    }
+//    
+//    @AfterClass
+//    public static void tearDownClass() {
+//    }
     
     @Before
     public void setUp() {
@@ -217,5 +217,11 @@ public class DBTest {
             fail("Some value is null");
     }
     // revisa que primero estuviera desactivado y que luego esté activado
+    
+    
+    
+    
+    
+    
     
 }
