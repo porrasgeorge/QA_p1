@@ -12,7 +12,7 @@ import java.time.LocalTime;
  * @author Administrador
  */
 public class Schedule {
-    int ID;
+    private int ID;
     int Bus_Number;
     String Description;
     LocalTime Departure_Time;
@@ -38,6 +38,13 @@ public class Schedule {
         this.Status = Status;
     }
     
+    public int getID(){
+        return this.ID;
+    }
+    public void setID(int ID){
+        this.ID = ID;
+    }
+        
     //Compare with Schedule class
     public boolean isEquals (Schedule Sched) {
         if (this != null && Sched != null)
@@ -87,6 +94,10 @@ public class Schedule {
     public static Schedule readScheduleByID(int ID){
      Schedule Sched = DB.selectScheduleWhereId(ID);
      return Sched;
+    }
+    
+    public void updateSchedule(){
+        DB.updateScheduleByID(this);
     }
     
     

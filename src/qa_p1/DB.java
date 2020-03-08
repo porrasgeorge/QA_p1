@@ -84,7 +84,7 @@ public class DB {
  
         try (Connection conn = DriverManager.getConnection(url);
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, Sched.ID);
+            pstmt.setInt(1, Sched.getID());
             pstmt.setInt(2, Sched.Bus_Number);
             pstmt.setString(3, Sched.Description);
             pstmt.setString(4, Sched.Departure_Time.toString());
@@ -105,7 +105,7 @@ public class DB {
             Statement stmt  = conn.createStatement();
             ResultSet rs    = stmt.executeQuery(sql)){
             
-            Sched.ID = rs.getInt("ID");
+            Sched.setID(rs.getInt("ID"));
             Sched.Bus_Number = rs.getInt("BusNumber");
             Sched.Description = rs.getString("Description");
             Sched.Departure_Time = LocalTime.parse(rs.getString("Departure_Time"));
@@ -116,7 +116,7 @@ public class DB {
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        if (Sched.ID == -1)
+        if (Sched.getID() == -1)
             return null;
         else
             return Sched;
@@ -133,6 +133,23 @@ public class DB {
             pstmt.setString(3, Departure_Time.toString());
             pstmt.setString(4, Arrival_Time.toString());
             pstmt.setInt(5, Status);
+            pstmt.executeUpdate();
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void updateScheduleByID(Schedule sched) {
+        String sql = "UPDATE Schedules SET BusNumber = ?, Description = ?, Departure_Time = ?, Arrival_Time = ?, Status = ? WHERE ID = " + sched.getID() + ";";
+
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, sched.Bus_Number);
+            pstmt.setString(2, sched.Description);
+            pstmt.setString(3, sched.Departure_Time.toString());
+            pstmt.setString(4, sched.Arrival_Time.toString());
+            pstmt.setInt(5, sched.Status);
             pstmt.executeUpdate();
         } 
         catch (SQLException e) {
@@ -175,7 +192,7 @@ public class DB {
             
             while (rs.next()) {  
                 Schedule Sched = new Schedule();
-                Sched.ID = rs.getInt("ID");
+                Sched.setID(rs.getInt("ID"));
                 Sched.Bus_Number = rs.getInt("BusNumber");
                 Sched.Description = rs.getString("Description");
                 Sched.Departure_Time = LocalTime.parse(rs.getString("Departure_Time"));

@@ -112,7 +112,7 @@ public class ScheduleTest {
         assertTrue(SchedToDB.isEquals(SchedFromDB));
     }    
     
-@Test
+    @Test
     public void testReadSchedule() {
         System.out.println("Read Schedule first test");
         int ID = 16;
@@ -130,8 +130,49 @@ public class ScheduleTest {
         Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
         assertNull(SchedFromDB);
     }
-    // el ID no existe por la tanto debe traer NULL
-
+    
+    //new schedule compared to Sched3 inserted in setUp
+    @Test
+    public void testReadSchedule3() {
+        System.out.println("Read Schedule third test");
+        Schedule Sched3 = new Schedule(3, 2, "Ruta Florencia - CQ", LocalTime.of(7, 0), LocalTime.of(7, 20), 1);
+        Schedule SchedFromDB = Schedule.readScheduleByID(3);
+        assertTrue(Sched3.isEquals(SchedFromDB));
+    }
+    
+    
+    @Test
+    public void testUpdateScheduleByID() {
+        System.out.println("update Schedule first test");
+        int ID = 1;
+        Schedule original = Schedule.readScheduleByID(ID);
+        Schedule Sched = Schedule.readScheduleByID(ID);
+        Sched.Bus_Number = 10;
+        Sched.updateSchedule();
+        Schedule SchedFromDB = Schedule.readScheduleByID(ID);
+        assertTrue(SchedFromDB.isEquals(Sched));
+    }
+    
+    //ID cannot be modified, is private    
+//    @Test
+//    public void testUpdateScheduleByID2() {
+//        System.out.println("update Schedule first test");
+//        int ID = 1;
+//        Schedule Sched = Schedule.readScheduleByID(ID);
+//        Sched.ID = 10;
+//        Sched.updateSchedule();
+//        Schedule SchedFromDB = Schedule.readScheduleByID(ID);
+//        assertTrue(SchedFromDB.isEquals(Sched));
+//    }
+    
+    @Test
+    public void testUpdateScheduleByID3() {
+        System.out.println("update Schedule test 2");
+        int ID = 2;
+        DB.updateScheduleByID(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1);
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        assertTrue(SchedFromDB.isEquals(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1));
+    }
 
     
 }
