@@ -145,7 +145,6 @@ public class ScheduleTest {
     public void testUpdateScheduleByID() {
         System.out.println("update Schedule first test");
         int ID = 1;
-        Schedule original = Schedule.readScheduleByID(ID);
         Schedule Sched = Schedule.readScheduleByID(ID);
         Sched.Bus_Number = 10;
         Sched.updateSchedule();
@@ -165,14 +164,79 @@ public class ScheduleTest {
 //        assertTrue(SchedFromDB.isEquals(Sched));
 //    }
     
+    
     @Test
     public void testUpdateScheduleByID3() {
-        System.out.println("update Schedule test 2");
-        int ID = 2;
-        DB.updateScheduleByID(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1);
-        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
-        assertTrue(SchedFromDB.isEquals(ID, 4, "Ruta Zarcero - Sarchi", LocalTime.of(07, 00), LocalTime.of(8, 30), 1));
+        System.out.println("update Schedule third test");
+        int ID = 1;
+        Schedule Sched = Schedule.readScheduleByID(ID);
+        Sched.Departure_Time = LocalTime.of(11, 25);
+        Sched.updateSchedule();
+        Schedule SchedFromDB = Schedule.readScheduleByID(ID);
+        assertTrue(SchedFromDB.isEquals(Sched));
     }
+    
+    // should be read to deactivate
+    @Test
+    public void testDeactivateSchedule() {
+        System.out.println("deactivate Schedule first test");
+        int ID = 2;
+        Schedule Sched = Schedule.readScheduleByID(ID);
+        Sched.deactivateSchedule();
+        Schedule SchedFromDB = Schedule.readScheduleByID(ID);
+        if (SchedFromDB != null )
+            assertTrue(SchedFromDB.Status == 0);
+        else
+            fail("Some value is null");
+    }
+    // revisa que esté desactivado  
+    
+    @Test
+    public void testDeactivateSchedule2() {
+        System.out.println("deactivate Schedule second test");
+        int ID = 3;
+        Schedule SchedBefore = Schedule.readScheduleByID(ID);
+        Schedule Sched = Schedule.readScheduleByID(ID);
+        Sched.deactivateSchedule();
+        Schedule SchedFromDBAfter = DB.selectScheduleWhereId(ID);
+        if (SchedBefore != null && SchedFromDBAfter != null)
+            assertTrue(SchedBefore.Status == 1 && SchedFromDBAfter.Status == 0);
+        else
+            fail("Some value is null");
+    }
+    
+    @Test
+    public void testActivateSchedule() {
+        System.out.println("activate Schedule first test");
+        int ID = 2;
+        Schedule Sched = Schedule.readScheduleByID(ID);
+        Sched.activateSchedule();
+        Schedule SchedFromDB = Schedule.readScheduleByID(ID);
+        if (SchedFromDB != null )
+            assertTrue(SchedFromDB.Status == 1);
+        else
+            fail("Some value is null");
+    }
+    // revisa que esté activado
+    
+    
+    
+    @Test
+    public void testActivateSchedule2() {
+        System.out.println("activate Schedule second test");
+        int ID = 1;
+        Schedule SchedBefore = Schedule.readScheduleByID(ID);
+        Schedule SchedFromDB = Schedule.readScheduleByID(ID);
+        SchedFromDB.activateSchedule();
+        Schedule SchedFromDBAfter = Schedule.readScheduleByID(ID);
+        if (SchedBefore != null && SchedFromDBAfter != null)
+            assertTrue(SchedBefore.Status == 0 && SchedFromDBAfter.Status == 1);
+        else
+            fail("Some value is null");
+    }
+    // revisa que primero estuviera desactivado y que luego esté activado
+    
+    
 
     
 }

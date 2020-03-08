@@ -100,6 +100,18 @@ public class Schedule {
         DB.updateScheduleByID(this);
     }
     
+    public void deactivateSchedule(){
+        this.Status = 0;
+        DB.deactivateScheduleByID(this.ID);
+    }
+    
+    public void activateSchedule(){
+        this.Status = 1;
+        DB.activateScheduleByID(this.ID);
+    }
+    
+    
+    
     
 }
 
