@@ -81,7 +81,7 @@ public class ScheduleTest {
      */
     @Test
     public void testSaveSchedule() {
-        System.out.println("saveSchedule first test");
+        System.out.println("Save Schedule first test");
         Schedule Sched = new Schedule(6, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
         int SizeBefore = DB.lengthSchedulesTable();
         Sched.saveSchedule();
@@ -90,25 +90,47 @@ public class ScheduleTest {
         assertTrue((SizeBefore + 1) == SizeAfter);
     }
     
+
     @Test
     public void testSaveSchedule2() {
-        System.out.println("saveSchedule second test");
+        System.out.println("Save Schedule second test");
         Schedule SchedToDB = new Schedule(7, 10, "Ruta Pital - Florencia", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
         SchedToDB.saveSchedule();
-        Schedule SchedFromDB = DB.selectScheduleWhereId(7);
-
+        Schedule SchedFromDB = Schedule.readScheduleByID(7);
+        assertTrue(SchedToDB.isEquals(SchedFromDB));
     }
-    
 
+    //NOT modified by insertion with same ID
     @Test
-    public void testInsertNewSchedule2() {
-        System.out.println("insert Schedule test 2");
+    public void testSaveSchedule3() {
+        System.out.println("Save Schedule third test");
         Schedule SchedToDB = new Schedule(7, 10, "Ruta Pital - Florencia", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
-        DB.insertNewSchedule(SchedToDB);
-        Schedule SchedFromDB = Schedule.readSchedule(7);
+        Schedule SchedToDB_BadInsert = new Schedule(7, 11, "Ruta ABC", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
+        SchedToDB.saveSchedule();
+        SchedToDB_BadInsert.saveSchedule();
+        Schedule SchedFromDB = Schedule.readScheduleByID(7);
         assertTrue(SchedToDB.isEquals(SchedFromDB));
     }    
     
+@Test
+    public void testReadSchedule() {
+        System.out.println("Read Schedule first test");
+        int ID = 16;
+        Schedule SchedToDB = new Schedule(ID, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
+        SchedToDB.saveSchedule();
+        Schedule SchedFromDB = Schedule.readScheduleByID(ID);
+        assertTrue(SchedToDB.isEquals(SchedFromDB));
+    }
+    
+    // should return null beacause Schedule 10 doesn't exists
+    @Test
+    public void testReadSchedule2() {
+        System.out.println("Read Schedule second test");
+        int ID = 10;
+        Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
+        assertNull(SchedFromDB);
+    }
+    // el ID no existe por la tanto debe traer NULL
 
 
     

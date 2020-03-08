@@ -126,7 +126,7 @@ public class DBTest {
     public void testSelectScheduleWhereId() {
         System.out.println("select Schedule by Id");
         int ID = 16;
-        Schedule SchedToDB = new Schedule(16, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
+        Schedule SchedToDB = new Schedule(ID, 7, "Ruta Naranjo - Los Chiles", LocalTime.of(10, 20), LocalTime.of(14, 0), 1);
         DB.insertNewSchedule(SchedToDB);
         Schedule SchedFromDB = DB.selectScheduleWhereId(ID);
         assertTrue(SchedToDB.isEquals(SchedFromDB));

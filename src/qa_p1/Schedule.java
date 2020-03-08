@@ -84,7 +84,7 @@ public class Schedule {
         DB.insertNewSchedule(this);
     }
     
-    public static Schedule readSchedule(int ID){
+    public static Schedule readScheduleByID(int ID){
      Schedule Sched = DB.selectScheduleWhereId(ID);
      return Sched;
     }
