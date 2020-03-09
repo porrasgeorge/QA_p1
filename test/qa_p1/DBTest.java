@@ -32,7 +32,9 @@ public class DBTest {
     public void setUp() {
         //DB.createNewDatabase();
         DB.deleteSchedulesTable();
+        DB.deleteRoutesTable();
         DB.createSchedulesTable();
+        DB.createRoutesTable();
         
         Schedule Sched1 = new Schedule(1, 10, "Ruta San Francisco - CQ", LocalTime.of(6, 20), LocalTime.of(7, 0), 0);
         Schedule Sched2 = new Schedule(2, 1, "Ruta Korea - Pital", LocalTime.of(8, 0), LocalTime.of(9, 0), 0);

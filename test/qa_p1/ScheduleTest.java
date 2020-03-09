@@ -95,9 +95,10 @@ public class ScheduleTest {
     @Test
     public void testSaveSchedule2() {
         System.out.println("Save Schedule second test");
-        Schedule schedToDB = new Schedule(17, 10, "Ruta Pital - Florencia", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
+        int ID = 17;
+        Schedule schedToDB = new Schedule(ID, 10, "Ruta Pital - Florencia", LocalTime.of(5, 00), LocalTime.of(6, 10), 1);
         schedToDB.saveSchedule();
-        Schedule schedFromDB = Schedule.getScheduleByID(7);
+        Schedule schedFromDB = Schedule.getScheduleByID(ID);
         assertTrue(schedToDB.isEquals(schedFromDB));
     }
 

@@ -21,6 +21,8 @@ public class QA_p1 {
 
         DB.deleteSchedulesTable();
         DB.createSchedulesTable();
+        DB.deleteRoutesTable();
+        DB.createRoutesTable();
         
         Schedule Sched1 = new Schedule(1, 10, "Ruta San Francisco - CQ", LocalTime.of(6, 20), LocalTime.of(7, 0), 0);
         Schedule Sched2 = new Schedule(2, 1, "Ruta Korea - Pital", LocalTime.of(8, 0), LocalTime.of(9, 0), 0);
@@ -34,11 +36,12 @@ public class QA_p1 {
         DB.insertNewSchedule(Sched4);
         DB.insertNewSchedule(Sched5);
         
+        Route route1 = new Route(1, 10, "Ruta San Francisco - CQ", 20, "Quesada", 52, 1);
+        DB.insertNewRoute(route1);
+        
         List<Schedule> schedules = DB.schedulesByBusNumber(1);
         
         System.out.println(schedules.size());
-        
-        
     }
     
 }

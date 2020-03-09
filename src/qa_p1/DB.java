@@ -74,8 +74,45 @@ public class DB {
         }
     }
 
-///////////////////
+    
+    public static void deleteRoutesTable() {
+        String sql = "DROP TABLE IF EXISTS Routes;";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+            // drop table
+            stmt.execute(sql);
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }            
+                    
+                    
+    public static void createRoutesTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS Routes (\n"
+                + "    ID integer PRIMARY KEY,\n"
+                + "    busNumber integer,\n"
+                + "    description text NOT NULL,\n"
+                + "    zone text NOT NULL,\n"
+                + "    travelTime integer,\n"
+                + "    travelQuantity integer,\n"
+                + "    status integer\n"
+                + ");";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+//--------------------------------------------------------------------------------------------------------------
 //    Schedules
+//--------------------------------------------------------------------------------------------------------------
 
     
     public static void insertNewSchedule(Schedule Sched) {
@@ -225,5 +262,47 @@ public class DB {
             System.out.println(e.getMessage());
         }
         return Quantity;
-    }   
+    }
+    
+    
+   
+
+
+//--------------------------------------------------------------------------------------------------------------
+//    Routes
+//--------------------------------------------------------------------------------------------------------------
+// 
+//          String sql = "CREATE TABLE IF NOT EXISTS Routes (\n"
+//                + "    ID integer PRIMARY KEY,\n"
+//                + "    busNumber integer,\n"
+//                + "    description text NOT NULL,\n"
+//                + "    zone text NOT NULL,\n"
+//                + "    travelTime integer\n"
+//                + "    travelQuantity integer\n"
+//                + "    status integer\n"
+//                + ");";  
+    
+    
+    public static void insertNewRoute(Route route) {
+        String sql = "INSERT INTO Routes(ID, busNumber, description, zone, travelTime, travelQuantity, status)"
+                + " VALUES(?,?,?,?,?,?,?)";
+ 
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, route.getID());
+            pstmt.setInt(2, route.busNumber);
+            pstmt.setString(3, route.description);
+            pstmt.setString(4, route.zone);
+            pstmt.setInt(5, route.travelTime);
+            pstmt.setInt(6, route.travelQuantity);
+            pstmt.setInt(7, route.status);
+            pstmt.executeUpdate();
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    
+    
 }
