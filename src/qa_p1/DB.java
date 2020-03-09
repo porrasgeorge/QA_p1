@@ -303,6 +303,49 @@ public class DB {
         }
     }
     
+    public static Route selectRouteWhereId(int ID){
+        String sql = "SELECT ID, busNumber, description, zone, travelTime, travelQuantity, status FROM Routes where ID = " + ID + ";";
+        Route route = new Route();
+        
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+            route.setID(rs.getInt("ID"));
+            route.busNumber = rs.getInt("busNumber");
+            route.description = rs.getString("description");
+            route.zone = rs.getString("zone");
+            route.travelTime = rs.getInt("travelTime");
+            route.travelQuantity = rs.getInt("travelQuantity");
+            route.status = rs.getInt("status");
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        if (route.getID() == -1)
+            return null;
+        else
+            return route;
+    }
     
+    
+    public static int lengthRoutesTable() {
+        String sql = "SELECT COUNT(*) AS Quantity FROM Routes ;";
+        int Quantity = 0;
+        
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+           Quantity = rs.getInt("Quantity");
+            
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Quantity;
+    }
+    
+
     
 }

@@ -52,7 +52,7 @@ public class ScheduleTest {
      */
     @Test
     public void testIsEquals_Schedule() {
-        System.out.println("isEquals");
+        System.out.println("isEquals first test");
         Schedule sched = new Schedule(1, 10, "Ruta San Francisco - CQ", LocalTime.of(6, 20), LocalTime.of(7, 0), 0);
         Schedule instance = new Schedule(1, 10, "Ruta San Francisco - CQ", LocalTime.of(6, 20), LocalTime.of(7, 0), 0);
         boolean expResult = true;
@@ -65,7 +65,7 @@ public class ScheduleTest {
      */
     @Test
     public void testIsEquals_6args() {
-        System.out.println("isEquals");
+        System.out.println("isEquals second test ");
         int ID = 1;
         int bus_Number = 10;
         String description = "Ruta San Francisco - CQ";

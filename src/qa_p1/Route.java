@@ -62,11 +62,15 @@ public class Route {
         }
         else
             return false;
-        
     }
     
     public void saveRoute(){
         DB.insertNewRoute(this);
+    }
+    
+    public static Route getRouteByID(int ID){
+        Route route = DB.selectRouteWhereId(ID);
+        return route;
     }
 
 }
