@@ -81,8 +81,10 @@ public class RouteTest {
         Route routeToDB = new Route(ID, 12, "Ruta Florencia - CQ", 20, "Quesada", 40, 1);
         routeToDB.saveRoute();
         Route routeFromDB = new Route(ID, 12, "Ruta Florencia - CQ", 20, "Quesada", 40, 1);
-        
         assertTrue(routeFromDB.isEquals(routeToDB));
     }
+
+
+
     
 }

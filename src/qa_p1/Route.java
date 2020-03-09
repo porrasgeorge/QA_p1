@@ -72,5 +72,10 @@ public class Route {
         Route route = DB.selectRouteWhereId(ID);
         return route;
     }
+    
+    public void updateRoute(){
+        DB.updateRouteByID(this);
+    }
+    
 
 }
