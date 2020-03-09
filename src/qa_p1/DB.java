@@ -23,10 +23,10 @@ import java.util.List;
 public class DB {
     
     //WINDOWS 
-    //public static String url = "jdbc:sqlite:C:/Java/QA_p1/p1.db";
+    public static String url = "jdbc:sqlite:C:/Java/QA_p1/p1.db";
     
     //LINUX
-    public static String url = "jdbc:sqlite:/home/matute/QA_p1/p1.db";
+    //public static String url = "jdbc:sqlite:/home/matute/QA_p1/p1.db";
 
     public static void createNewDatabase() {
         try (Connection conn = DriverManager.getConnection(url)) {
@@ -346,7 +346,7 @@ public class DB {
             pstmt.setString(3, route.zone);
             pstmt.setInt(4, route.travelTime);
             pstmt.setInt(5, route.travelQuantity);
-            pstmt.setInt(5, route.status);
+            pstmt.setInt(6, route.status);
             pstmt.executeUpdate();
         } 
         catch (SQLException e) {

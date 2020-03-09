@@ -8,9 +8,7 @@ package qa_p1;
 import java.time.LocalTime;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -131,7 +129,7 @@ public class ScheduleTest {
     public void testReadSchedule2() {
         System.out.println("Read Schedule second test");
         int ID = 10;
-        Schedule schedFromDB = DB.selectScheduleWhereId(ID);
+        Schedule schedFromDB = Schedule.getScheduleByID(ID);
         assertNull(schedFromDB);
     }
     

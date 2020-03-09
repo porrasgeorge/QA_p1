@@ -4,8 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Java/QA_p1/src/qa_p1/Schedule.java</file>
+            <file>file:/C:/Java/QA_p1/test/qa_p1/ScheduleTest.java</file>
             <file>file:/C:/Java/QA_p1/src/qa_p1/DB.java</file>
             <file>file:/C:/Java/QA_p1/src/qa_p1/QA_p1.java</file>
+            <file>file:/C:/Java/QA_p1/test/qa_p1/RouteTest.java</file>
+            <file>file:/C:/Java/QA_p1/src/qa_p1/Route.java</file>
+            <file>file:/C:/Java/QA_p1/test/qa_p1/DBTest.java</file>
         </group>
     </open-files>
 </project-private>
