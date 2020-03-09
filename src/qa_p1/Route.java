@@ -5,6 +5,8 @@
  */
 package qa_p1;
 
+import java.util.List;
+
 /**
  *
  * @author matute
@@ -75,6 +77,21 @@ public class Route {
     
     public void updateRoute(){
         DB.updateRouteByID(this);
+    }
+    
+    public void deactivateRoute(){
+        this.status = 0;
+        DB.deactivateRouteByID(this.ID);
+    }
+    
+    public void activateRoute(){
+        this.status = 1;
+        DB.activateRouteByID(this.ID);
+    }
+    
+    public static List<Route> getRoutesByBusNumber(int busNumber){
+        List<Route> routesList = DB.routesByBusNumber(busNumber);
+        return routesList;
     }
     
 

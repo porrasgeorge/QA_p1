@@ -353,4 +353,60 @@ public class DB {
             System.out.println(e.getMessage());
         }
     }
+    
+    
+    public static void deactivateRouteByID(int ID) {
+        String sql = "UPDATE Routes SET Status = ? WHERE ID = " + ID + ";";
+
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, 0);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }    
+
+    public static void activateRouteByID(int ID) {
+        String sql = "UPDATE Routes SET Status = ? WHERE ID = " + ID + ";";
+
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, 1);
+            pstmt.executeUpdate();
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }    
+    
+    public static List<Route> routesByBusNumber(int BusNumber) {
+        List<Route> routesList = new ArrayList<>();
+        String sql = "SELECT ID, busNumber, description, zone, travelTime, travelQuantity, status FROM Routes where ID = " + BusNumber + ";";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+            while (rs.next()) {  
+                Route route = new Route();
+                route.setID(rs.getInt("ID"));
+                route.busNumber = rs.getInt("busNumber");
+                route.description = rs.getString("description");
+                route.zone = rs.getString("zone");
+                route.travelTime = rs.getInt("travelTime");
+                route.travelQuantity = rs.getInt("travelQuantity");
+                route.status = rs.getInt("status");
+                routesList.add(route);
+            } 
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return routesList;
+    } 
+    
+    
+    
 }
