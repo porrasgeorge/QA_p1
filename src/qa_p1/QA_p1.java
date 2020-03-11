@@ -36,12 +36,31 @@ public class QA_p1 {
         DB.insertNewSchedule(Sched4);
         DB.insertNewSchedule(Sched5);
         
-        Route route1 = new Route(1, 10, "Ruta San Francisco - CQ", 20, "Quesada", 52, 1);
-        DB.insertNewRoute(route1);
         
         List<Schedule> schedules = DB.schedulesByBusNumber(1);
         
         System.out.println(schedules.size());
+        
+        
+        DB.deleteRoutesTable();
+        DB.createRoutesTable();
+
+        Route route1 = new Route(1, 2, "Ruta San Francisco - CQ", 20, "Quesada", 52, 1);
+        Route route2 = new Route(2, 3, "Ruta Korea - Pital", 30, "Korea", 52, 1);
+        Route route3 = new Route(3, 3, "Ruta Florencia - CQ", 45, "Quesada", 52, 1);
+        Route route4 = new Route(4, 3, "Ruta Venecia - CQ", 100, "Quesada", 52, 0);
+        Route route5 = new Route(5, 5, "Ruta Pital - CQ", 40, "Quesada", 52, 1);
+        Route route6 = new Route(6, 4, "Ruta Pital - CQ", 40, "Quesada", 52, 1);
+        
+        DB.insertNewRoute(route1);
+        DB.insertNewRoute(route2);
+        DB.insertNewRoute(route3);
+        DB.insertNewRoute(route4);
+        DB.insertNewRoute(route5);
+        DB.insertNewRoute(route6);
+        
+        List<Route> routesList = Route.getRoutesByBusNumber(4);
+        System.out.println(routesList.size());
     }
     
 }

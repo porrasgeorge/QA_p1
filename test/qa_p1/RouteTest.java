@@ -5,10 +5,9 @@
  */
 package qa_p1;
 
+import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -97,8 +96,8 @@ public class RouteTest {
     
     // compares known route with route from DB
     @Test
-    public void testReadSchedule2() {
-        System.out.println("Read Schedule second test");
+    public void testReadRoute2() {
+        System.out.println("Read Route second test");
         int ID = 3;
         Route routeFromDB = Route.getRouteByID(ID);
         Route route = new Route(3, 3, "Ruta Florencia - CQ", 45, "Quesada", 52, 1);
@@ -108,8 +107,8 @@ public class RouteTest {
         
     // should return null beacause Route 10 doesn't exists
     @Test
-    public void testReadSchedule3() {
-        System.out.println("Read Schedule third test");
+    public void testReadRoute3() {
+        System.out.println("Read Route third test");
         int ID = 10;
         Route routeFromDB = Route.getRouteByID(ID);
         assertNull(routeFromDB);
@@ -181,4 +180,67 @@ public class RouteTest {
             fail("Some value is null");
     }
     
+       // read, activate and check for 1 
+    @Test
+    public void testActivateRoute() {
+        System.out.println("activate Route first test");
+        int ID = 4;
+        Route route = Route.getRouteByID(ID);
+        route.activateRoute();
+        if (route != null )
+            assertTrue(route.status == 1);
+        else
+            fail("Some value is null");
+    }
+    
+    // check if status change from 0 to 1
+    @Test
+    public void testActivateRoute2() {
+        System.out.println("activate Route second test");
+        int ID = 4;
+        Route routeBefore = Route.getRouteByID(ID);
+        Route route = Route.getRouteByID(ID);
+        route.activateRoute();
+        Route routeAfter = Route.getRouteByID(ID);
+        if (routeBefore != null && routeAfter != null)
+            assertTrue(routeBefore.status == 0 && routeAfter.status == 1);
+        else
+            fail("Some value is null");
+    }
+    
+    //read known schedules from db and compare
+    @Test
+    public void testGetRoutesByBusNumber() {
+        System.out.println("Read Route by Bus first test");
+        int busNumber = 3;
+        List<Route> routesList = Route.getRoutesByBusNumber(busNumber);
+        // previously charged with bus number 3
+        Route route2 = new Route(2, 3, "Ruta Korea - Pital", 30, "Korea", 52, 1);
+        Route route3 = new Route(3, 3, "Ruta Florencia - CQ", 45, "Quesada", 52, 1);
+        Route route4 = new Route(4, 3, "Ruta Venecia - CQ", 100, "Quesada", 52, 0);
+        assertTrue((route2.isEquals(routesList.get(0))) && 
+                (route3.isEquals(routesList.get(1))) && 
+                (route4.isEquals(routesList.get(2))));
+    }
+//
+//    //reads all schedules with busNumber = 3 and checks size
+//    @Test
+//    public void testGetRoutesByBusNumber2() {
+//        System.out.println("Read Route by Bus second test");
+//        int busNumber = 3;
+//        List<Schedule> schedulesList = Schedule.getSchedulesByBusNumber(busNumber);
+//        // 2 previously charged with bus number 3
+//        assertTrue(schedulesList.size() == 2);
+//    }
+//
+//    //reads all schedules with busNumber = 1 and checks size
+//    @Test
+//    public void testGetRoutesByBusNumber3() {
+//        System.out.println("Read Route by Bus third test");
+//        int busNumber = 1;
+//        List<Schedule> schedulesList = Schedule.getSchedulesByBusNumber(busNumber);
+//        // 2 previously charged with bus number 1
+//        assertTrue(schedulesList.size() == 1);
+//    }
+//    
 }

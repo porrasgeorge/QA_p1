@@ -23,10 +23,10 @@ import java.util.List;
 public class DB {
     
     //WINDOWS 
-    public static String url = "jdbc:sqlite:C:/Java/QA_p1/p1.db";
+    //public static String url = "jdbc:sqlite:C:/Java/QA_p1/p1.db";
     
     //LINUX
-    //public static String url = "jdbc:sqlite:/home/matute/QA_p1/p1.db";
+    public static String url = "jdbc:sqlite:/home/matute/QA_p1/p1.db";
 
     public static void createNewDatabase() {
         try (Connection conn = DriverManager.getConnection(url)) {
@@ -382,7 +382,7 @@ public class DB {
     
     public static List<Route> routesByBusNumber(int BusNumber) {
         List<Route> routesList = new ArrayList<>();
-        String sql = "SELECT ID, busNumber, description, zone, travelTime, travelQuantity, status FROM Routes where ID = " + BusNumber + ";";
+        String sql = "SELECT ID, busNumber, description, zone, travelTime, travelQuantity, status FROM Routes where busNumber = " + BusNumber + ";";
         
         try (Connection conn = DriverManager.getConnection(url);
             Statement stmt  = conn.createStatement();
