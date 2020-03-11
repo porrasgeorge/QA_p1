@@ -208,7 +208,7 @@ public class RouteTest {
             fail("Some value is null");
     }
     
-    //read known schedules from db and compare
+    //read known Routes from db and compare
     @Test
     public void testGetRoutesByBusNumber() {
         System.out.println("Read Route by Bus first test");
@@ -222,25 +222,25 @@ public class RouteTest {
                 (route3.isEquals(routesList.get(1))) && 
                 (route4.isEquals(routesList.get(2))));
     }
-//
-//    //reads all schedules with busNumber = 3 and checks size
-//    @Test
-//    public void testGetRoutesByBusNumber2() {
-//        System.out.println("Read Route by Bus second test");
-//        int busNumber = 3;
-//        List<Schedule> schedulesList = Schedule.getSchedulesByBusNumber(busNumber);
-//        // 2 previously charged with bus number 3
-//        assertTrue(schedulesList.size() == 2);
-//    }
-//
-//    //reads all schedules with busNumber = 1 and checks size
-//    @Test
-//    public void testGetRoutesByBusNumber3() {
-//        System.out.println("Read Route by Bus third test");
-//        int busNumber = 1;
-//        List<Schedule> schedulesList = Schedule.getSchedulesByBusNumber(busNumber);
-//        // 2 previously charged with bus number 1
-//        assertTrue(schedulesList.size() == 1);
-//    }
-//    
+
+    //reads all Routes with busNumber = 3 and checks size
+    @Test
+    public void testGetRoutesByBusNumber2() {
+        System.out.println("Read Route by Bus second test");
+        int busNumber = 3;
+        List<Route> routesList = Route.getRoutesByBusNumber(busNumber);
+        // 3 previously charged with bus number 3
+        assertTrue(routesList.size() == 3);
+    }
+
+    //reads all Routes with busNumber = 2 and checks size
+    @Test
+    public void testGetRoutesByBusNumber3() {
+        System.out.println("Read Route by Bus third test");
+        int busNumber = 2;
+        List<Route> routesList = Route.getRoutesByBusNumber(busNumber);
+        // 1 previously charged with bus number 1
+        assertTrue(routesList.size() == 1);
+    }
+    
 }

@@ -109,6 +109,44 @@ public class DB {
             System.out.println(e.getMessage());
         }
     }
+    
+    
+    public static void deletePartnersTable() {
+        String sql = "DROP TABLE IF EXISTS Partners;";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+            // drop table
+            stmt.execute(sql);
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }            
+                    
+              
+    public static void createPartnersTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS Partners (\n"
+                + "    ID integer PRIMARY KEY,\n"
+                + "    name text NOT NULL,\n"
+                + "    secName text NOT NULL,\n"
+                + "    line text NOT NULL,\n"
+                + "    busNumber integer,\n"
+                + "    busCapacity integer,\n"
+                + "    asistant text NOT NULL,\n"
+                + "    driver text NOT NULL,\n"
+                + "    status integer\n"
+                + ");";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 //--------------------------------------------------------------------------------------------------------------
 //    Schedules
@@ -407,6 +445,51 @@ public class DB {
         return routesList;
     } 
     
+  
+
+
+//--------------------------------------------------------------------------------------------------------------
+//    Partners
+//--------------------------------------------------------------------------------------------------------------
+
     
+    public static void insertNewPartner(Partner partner) {
+        String sql = "INSERT INTO Partners(ID, name, secName, line, busNumber, busCapacity, asistant, driver, status)"
+                + " VALUES(?,?,?,?,?,?,?,?,?)";
+ 
+        try (Connection conn = DriverManager.getConnection(url);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, partner.ID);
+            pstmt.setString(2, partner.name);
+            pstmt.setString(3, partner.secName);
+            pstmt.setString(4, partner.line);
+            pstmt.setInt(5, partner.busNumber);
+            pstmt.setInt(6, partner.busCapacity);
+            pstmt.setString(7, partner.asistant);
+            pstmt.setString(8, partner.driver);
+            pstmt.setInt(9, partner.status);
+            pstmt.executeUpdate();
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }    
+    
+    public static int lengthPartnersTable() {
+        String sql = "SELECT COUNT(*) AS Quantity FROM Partners ;";
+        int Quantity = 0;
+        
+        try (Connection conn = DriverManager.getConnection(url);
+            Statement stmt  = conn.createStatement();
+            ResultSet rs    = stmt.executeQuery(sql)){
+            
+           Quantity = rs.getInt("Quantity");
+            
+        } 
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return Quantity;
+    }
     
 }
